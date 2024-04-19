@@ -360,6 +360,14 @@ export class DraftService implements Disposable {
 	}
 
 	@log()
+	async archiveDraft(id: string, archiveReason?: string): Promise<void> {
+		await this.connection.fetchGkDevApi(`v1/drafts/${id}/archive`, {
+			method: 'POST',
+			body: archiveReason != null ? JSON.stringify({ archiveReason: archiveReason }) : undefined,
+		});
+	}
+
+	@log()
 	async getDraft(id: string): Promise<Draft> {
 		const scope = getLogScope();
 
